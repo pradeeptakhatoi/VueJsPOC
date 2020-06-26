@@ -1,7 +1,7 @@
 <template>
    <div class="container">
-    <h3> Users:</h3>
-    <table class="table">
+    <h3 class="mb-4">User Listing</h3>
+    <table class="table table-bordered table-striped table-hover">
       <thead>
         <tr>
           <th scope="col">Id</th>
@@ -18,9 +18,9 @@
           <td>{{user.email}}</td>
           <td>{{user.address.city}}</td>
           <td>
-            <router-link v-bind:to="{ name: 'ViewUser', params: {id: user.id } }">View</router-link> | 
-            <router-link v-bind:to="{ name: 'EditUser', params: {id: user.id } }">Edit</router-link> |             
-            <a href="javascript:;">Delete</a>
+            <router-link v-bind:to="{ name: 'ViewUser', params: {id: user.id } }" class="btn btn-primary btn-sm">View</router-link>&nbsp;&nbsp; 
+            <router-link v-bind:to="{ name: 'EditUser', params: {id: user.id } }" class="btn btn-secondary btn-sm">Edit</router-link>&nbsp;&nbsp;
+            <router-link v-bind:to="{ name: 'ViewUser', params: {id: user.id } }" class="btn btn-danger btn-sm">Delete</router-link>
           </td>
         </tr>
       </tbody>
@@ -42,8 +42,9 @@ export default {
     created: function() {
       axios
         .get('https://jsonplaceholder.typicode.com/users')
+        .then(res => res.data.slice(0, 5))
         .then(res => {
-          this.users = res.data;
+          this.users = res;
         })
     }
 }
