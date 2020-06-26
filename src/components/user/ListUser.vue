@@ -18,8 +18,8 @@
           <td>{{user.email}}</td>
           <td>{{user.address.city}}</td>
           <td>
-            <a href="javascript:;">View</a> | 
-            <a href="javascript:;">Edit</a> | 
+            <router-link v-bind:to="{ name: 'ViewUser', params: {id: user.id } }">View</router-link> | 
+            <router-link v-bind:to="{ name: 'EditUser', params: {id: user.id } }">Edit</router-link> |             
             <a href="javascript:;">Delete</a>
           </td>
         </tr>

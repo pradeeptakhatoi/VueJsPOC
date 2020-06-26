@@ -22,17 +22,19 @@ Vue.use(VueRouter)
   },
   {
     path: '/add-user',
-    name: 'Users',
+    name: 'AddUser',
     component: AddUser
   },
   {
     path: '/edit-user/:id',
-    name: 'Users',
+    props: true,
+    name: 'EditUser',
     component: EditUser
   },
   {
     path: '/view-user/:id',
-    name: 'Users',
+    props: true,
+    name: 'ViewUser',
     component: ViewUser
   },
   {
