@@ -39,26 +39,26 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'UserList',
-   data: function() {
-      return {
-        heading: "User List",
-      }
-    },
-    computed: {
-      ...mapState(['users', 'usersFetched']),
-    },    
-    created() {
-      // Call getUserList action so that vuex call update users by fetching data from API.
-      if(this.usersFetched === false) {
-        this.$store.dispatch('getUserList');
-      }      
-    },
-    methods: {
-      deleteUser : function(user) {
-        if(confirm('Are you sure you want to delete this user?')) {
-          this.$store.dispatch('deleteUser', user);
-        }        
-      }
+  data: function() {
+    return {
+      heading: "User List",
     }
+  },
+  computed: {
+    ...mapState(['users', 'usersFetched']),
+  },    
+  created() {
+    // Call [getUserList] action so that vuex can update [users] by fetching data from API.
+    if(this.usersFetched === false) {
+      this.$store.dispatch('getUserList');
+    }      
+  },
+  methods: {
+    deleteUser : function(user) {
+      if(confirm('Are you sure you want to delete this user?')) {
+        this.$store.dispatch('deleteUser', user);
+      }        
+    }
+  }
 }
 </script>

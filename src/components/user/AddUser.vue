@@ -6,12 +6,12 @@
    </div> 
     <form @submit="onSubmit" method="post">
     
-      <p v-if="errors.length">
+      <div v-if="errors.length" id="error_explanation">
         <b>Please correct the following error(s):</b>
         <ul>
           <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
         </ul>
-      </p>
+      </div>
 
       <div class="form-group">
         <label for="name">Name:</label>
@@ -89,14 +89,14 @@ export default {
       (!street) && this.errors.push('Street required.');
       (!city) && this.errors.push('City required.');
 
-      // If no error same to db & update to local state
+      // If no error save user to db & update vuex state
       if (this.errors.length === 0) {       
         axios.post(`http://localhost:3000/users/`, this.user).then((res) => {
 
-          // Update local state by calling the addUser mutation method 
+          // Update vuex state [users] list by calling the [addUser] mutation method 
           this.$store.commit('addUser', res.data);
 
-          // Redirect to user listing page
+          // Redirect to user listing page (using component name)
           this.$router.push({ name: 'Users' });
 
           // Show success message
@@ -118,5 +118,12 @@ export default {
   .form-group label {
     display: block;
     text-align: left;
+  }
+  #error_explanation {
+    color: #f00;    
+  }
+  #error_explanation ul {
+    list-style: none;
+    margin: 0 0 18px 0;
   }
 </style>
