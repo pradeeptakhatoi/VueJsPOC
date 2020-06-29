@@ -1,8 +1,8 @@
 <template>
    <div class="container">
-   <div style="position: relative;">
-      <h3 class="mb-4">User Listing</h3>
-      <router-link to="/add-user" class="btn btn-primary btn-sm" style="position: absolute; top: 5px; right: 10px;">Add New User</router-link>
+   <div class="formheader">
+      <h3>User Listing</h3>
+      <router-link to="/add-user" class="btn btn-primary btn-sm" style="position: absolute; top: 15px; right: 15px;">Add New User</router-link>
    </div> 
     <table class="table table-bordered table-striped table-hover">
       <thead>
@@ -62,3 +62,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .formheader {
+    position: relative;
+    background-color: #CCC;
+    padding: 10px;
+  }
+</style>
