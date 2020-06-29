@@ -61,25 +61,13 @@ export default {
     return {
         heading: "Edit User",
         errors: [],
-        user: {
-          name: null,
-          email: null,
-          phone: null,
-          address: {
-            street: null,       
-            city: null,
-            zipcode: null  
-          }
-        }        
     }
   },
-  created: function() {
-    const id = this.$route.params.id;
-    axios
-      .get(`http://localhost:3000/users/${id}`)
-      .then((res) => {
-        this.user = res.data;
-      });
+  computed: {
+    user () {
+      const userId = this.$route.params.id;
+      return this.$store.getters.getUser(userId)
+    }
   },
   methods:{
     onSubmit: function (e) {
@@ -110,6 +98,10 @@ export default {
       if (this.errors.length === 0) {
         axios.put(`http://localhost:3000/users/${id}/`, data).then((res) => {
           console.log(res);
+
+          // Update local state by calling the editUser mutation method 
+          this.$store.commit('editUser', this.user);
+
           this.$router.push({ name: 'Users' });
           alert("User Updated  Successfully!!");
         }, error => {

@@ -79,28 +79,27 @@ export default {
 
       this.errors = [];
 
-      const {name, email, phone, address} = this.user;
+      // Destructure for quick access
+      const {name, email, phone, address: {street, city}} = this.user;
 
-      if (!name) {
-        this.errors.push('Name required.');
-      }
-      if (!email) {
-        this.errors.push('Email required.');
-      }
-      if (!phone) {
-        this.errors.push('Phone required.');
-      }
-      if (!address.street) {
-        this.errors.push('Street required.');
-      }
-      if (!address.city) {
-        this.errors.push('City required.');
-      }
+      // Validate fields for errors
+      (!name) && this.errors.push('Name required.');
+      (!email) && this.errors.push('Email required.');
+      (!phone) && this.errors.push('Phone required.');
+      (!street) && this.errors.push('Street required.');
+      (!city) && this.errors.push('City required.');
 
-      if (this.errors.length === 0) {
+      // If no error same to db & update to local state
+      if (this.errors.length === 0) {       
         axios.post(`http://localhost:3000/users/`, this.user).then((res) => {
-          console.log(res);
+
+          // Update local state by calling the addUser mutation method 
+          this.$store.commit('addUser', res.data);
+
+          // Redirect to user listing page
           this.$router.push({ name: 'Users' });
+
+          // Show success message
           alert("New user added successfully!!");
         }, error => {
           console.log(error);

@@ -39,23 +39,18 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "ViewUser",
   data: function() {
     return {
       heading: "View User",
-      user: null,
     };
-  },
-  created: function() {
-    const id = this.$route.params.id;
-    axios
-      .get(`http://localhost:3000/users/${id}`)
-      .then((res) => {
-        this.user = res.data;
-      });
-  },
+  },    
+  computed: {
+    user () {
+      const userId = this.$route.params.id;
+      return this.$store.getters.getUser(userId)
+    },
+  }
 };
 </script>

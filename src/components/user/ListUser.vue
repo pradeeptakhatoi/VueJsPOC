@@ -35,36 +35,28 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { mapState } from 'vuex'
 
 export default {
   name: 'UserList',
    data: function() {
       return {
         heading: "User List",
-        users: [],
       }
     },
-    created: function() {
-      axios
-        .get('http://localhost:3000/users')
-        .then(res => res.data.slice(0, 10))
-        .then(res => {
-          this.users = res.sort((a, b) => a.name.localeCompare(b.name));
-        })
+    computed: {
+      ...mapState(['users', 'usersFetched']),
+    },    
+    created() {
+      // Call getUserList action so that vuex call update users by fetching data from API.
+      if(this.usersFetched === false) {
+        this.$store.dispatch('getUserList');
+      }      
     },
     methods: {
-    deleteUser : function(user) {
+      deleteUser : function(user) {
         if(confirm('Are you sure you want to delete this user?')) {
-
-          this.users = this.users.filter((u) => u.id != user.id);
-
-          axios.delete(`http://localhost:3000/users/${user.id}`).then(res => {
-            console.log(res);
-            // alert("Deleted Successfully!!");
-          }, error => {
-            console.log(error);
-          });
+          this.$store.dispatch('deleteUser', user);
         }        
       }
     }
