@@ -113,7 +113,7 @@ export default {
 
 <style scoped>
   .container {
-    max-width: 500px;
+    max-width: 550px;
   }
   .form-group label {
     display: block;
